@@ -1,7 +1,7 @@
 <img src="https://techjobsforgood-prod.s3.amazonaws.com/company_profile_photos/e8364d92-4faa-496e-a630-39bf3a751894-20220923-214424.jpg" >
 
 # Tomorrow.io Plugin for Indigo Domotics Home Automation
-## tomorrowio-indigo-plugin for Python3.11
+## tomorrowio-plugin for Python3.11
 This Indigo Plugin provides a way to connect Indigo to your Life360.com family tracking information. This plugin is only supported for [Indigo Domotics Software ](http://www.indigodomo.com)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://mit-license.org)
