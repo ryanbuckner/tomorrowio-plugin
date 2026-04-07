@@ -24,6 +24,8 @@ Download the Tomorrowio.indigoPlugin file and double click it
 - configure the Plugin by entering:
   - Your tomorrow.io API key. You can get this free on their website
   - Preferred unit of measurement
+  - Logging level
+  - Debugging
 
 #### Device Config 
 - create a new device of Type Tomorrow.io Weather
