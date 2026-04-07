@@ -35,7 +35,7 @@ Download the Tomorrowio.indigoPlugin file and double click it
 #### Current Weather
 Using the Realtime Weather API you can access current weather information for your location in minute-by-minute temporal resolution.
 
-###### Forecast
+#### Forecast
 Using the weather forecast API you can access daily forecasts for the next 5 days.
 
 
