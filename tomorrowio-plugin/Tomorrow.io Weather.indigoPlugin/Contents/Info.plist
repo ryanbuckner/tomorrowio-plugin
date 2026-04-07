@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PluginVersion</key>
+	<string>1.0.0</string>
+	<key>ServerApiVersion</key>
+	<string>3.7</string>
+	<key>LoadPriority</key>
+	<integer>5</integer>
+	<key>CFBundleDisplayName</key>
+	<string>Tomorrow.io Weather</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.indigodomo.indigoplugin.tomorrowio</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>https://www.tomorrow.io</string>
+		</dict>
+	</array>
+</dict>
+</plist>

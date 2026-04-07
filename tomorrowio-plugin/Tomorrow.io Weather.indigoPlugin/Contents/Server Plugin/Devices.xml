@@ -1,0 +1,791 @@
+<?xml version="1.0"?>
+<Devices>
+
+	<!-- ============================================================ -->
+	<!-- Current Conditions Device                                     -->
+	<!-- ============================================================ -->
+	<Device type="custom" id="current">
+		<Name>Current Conditions</Name>
+		<ConfigUI>
+			<Field id="locationType" type="menu" defaultValue="latlong">
+				<Label>Location Type:</Label>
+				<List>
+					<Option value="latlong">Latitude / Longitude</Option>
+					<Option value="address">Address or Place Name</Option>
+				</List>
+			</Field>
+			<Field id="latitude" type="textfield" visibleBindingId="locationType" visibleBindingValue="latlong">
+				<Label>Latitude:</Label>
+			</Field>
+			<Field id="longitude" type="textfield" visibleBindingId="locationType" visibleBindingValue="latlong">
+				<Label>Longitude:</Label>
+			</Field>
+			<Field id="address" type="textfield" visibleBindingId="locationType" visibleBindingValue="address">
+				<Label>Address or Place Name:</Label>
+			</Field>
+			<Field id="label" type="label" fontSize="small" fontColor="darkgray">
+				<Label>Enter a latitude/longitude pair or a place name (e.g. "San Francisco, CA" or "10001"). When first created, latitude and longitude are pre-populated from the Indigo server location.</Label>
+			</Field>
+		</ConfigUI>
+		<UiDisplayStateId>temperatureString</UiDisplayStateId>
+		<States>
+			<State id="observationTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Observation Time</TriggerLabel>
+				<ControlPageLabel>Last Observation Time</ControlPageLabel>
+			</State>
+			<State id="weatherCode">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Weather Code</TriggerLabel>
+				<ControlPageLabel>Weather Code</ControlPageLabel>
+			</State>
+			<State id="weatherDescription">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Weather Description</TriggerLabel>
+				<ControlPageLabel>Weather Description</ControlPageLabel>
+			</State>
+			<State id="sep0">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="temperature">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Temperature</TriggerLabel>
+				<ControlPageLabel>Current Temperature</ControlPageLabel>
+			</State>
+			<State id="temperatureApparent">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Feels Like Temperature</TriggerLabel>
+				<ControlPageLabel>Current Feels Like</ControlPageLabel>
+			</State>
+			<State id="temperatureString">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Temperature String</TriggerLabel>
+				<ControlPageLabel>Current Temperature String</ControlPageLabel>
+			</State>
+			<State id="humidity">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Relative Humidity</TriggerLabel>
+				<ControlPageLabel>Current Relative Humidity</ControlPageLabel>
+			</State>
+			<State id="sep1">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="dewPoint">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Dew Point</TriggerLabel>
+				<ControlPageLabel>Current Dew Point</ControlPageLabel>
+			</State>
+			<State id="dewPointString">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dew Point String</TriggerLabel>
+				<ControlPageLabel>Current Dew Point String</ControlPageLabel>
+			</State>
+			<State id="sep2">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="windSpeed">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Wind Speed</TriggerLabel>
+				<ControlPageLabel>Current Wind Speed</ControlPageLabel>
+			</State>
+			<State id="windGust">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Wind Gust</TriggerLabel>
+				<ControlPageLabel>Current Wind Gust</ControlPageLabel>
+			</State>
+			<State id="windDirection">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Wind Direction</TriggerLabel>
+				<ControlPageLabel>Current Wind Direction</ControlPageLabel>
+			</State>
+			<State id="windDegrees">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Wind Degrees</TriggerLabel>
+				<ControlPageLabel>Current Wind Degrees</ControlPageLabel>
+			</State>
+			<State id="windString">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Wind String</TriggerLabel>
+				<ControlPageLabel>Current Wind String</ControlPageLabel>
+			</State>
+			<State id="sep3">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="pressureSeaLevel">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Pressure (Sea Level)</TriggerLabel>
+				<ControlPageLabel>Current Pressure (Sea Level)</ControlPageLabel>
+			</State>
+			<State id="pressureSurfaceLevel">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Pressure (Surface)</TriggerLabel>
+				<ControlPageLabel>Current Pressure (Surface)</ControlPageLabel>
+			</State>
+			<State id="altimeterSetting">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Altimeter Setting</TriggerLabel>
+				<ControlPageLabel>Current Altimeter Setting</ControlPageLabel>
+			</State>
+			<State id="sep4">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="visibility">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Visibility</TriggerLabel>
+				<ControlPageLabel>Current Visibility</ControlPageLabel>
+			</State>
+			<State id="cloudBase">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Cloud Base</TriggerLabel>
+				<ControlPageLabel>Current Cloud Base</ControlPageLabel>
+			</State>
+			<State id="cloudCeiling">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Cloud Ceiling</TriggerLabel>
+				<ControlPageLabel>Current Cloud Ceiling</ControlPageLabel>
+			</State>
+			<State id="cloudCover">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Cloud Cover</TriggerLabel>
+				<ControlPageLabel>Current Cloud Cover %</ControlPageLabel>
+			</State>
+			<State id="sep5">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="uvIndex">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>UV Index</TriggerLabel>
+				<ControlPageLabel>Current UV Index</ControlPageLabel>
+			</State>
+			<State id="uvHealthConcern">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>UV Health Concern</TriggerLabel>
+				<ControlPageLabel>Current UV Health Concern</ControlPageLabel>
+			</State>
+			<State id="sep6">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="precipitationProbability">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Precipitation Probability</TriggerLabel>
+				<ControlPageLabel>Precipitation Probability %</ControlPageLabel>
+			</State>
+			<State id="rainIntensity">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Rain Intensity</TriggerLabel>
+				<ControlPageLabel>Current Rain Intensity</ControlPageLabel>
+			</State>
+			<State id="snowIntensity">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Snow Intensity</TriggerLabel>
+				<ControlPageLabel>Current Snow Intensity</ControlPageLabel>
+			</State>
+			<State id="sleetIntensity">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sleet Intensity</TriggerLabel>
+				<ControlPageLabel>Current Sleet Intensity</ControlPageLabel>
+			</State>
+			<State id="freezingRainIntensity">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Freezing Rain Intensity</TriggerLabel>
+				<ControlPageLabel>Current Freezing Rain Intensity</ControlPageLabel>
+			</State>
+			<State id="sep7">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="latitude">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Latitude</TriggerLabel>
+				<ControlPageLabel>Latitude</ControlPageLabel>
+			</State>
+			<State id="longitude">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Longitude</TriggerLabel>
+				<ControlPageLabel>Longitude</ControlPageLabel>
+			</State>
+			<State id="units">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Units</TriggerLabel>
+				<ControlPageLabel>Units</ControlPageLabel>
+			</State>
+		</States>
+	</Device>
+
+	<!-- ============================================================ -->
+	<!-- Forecast Device                                               -->
+	<!-- ============================================================ -->
+	<Device type="custom" id="forecast">
+		<Name>Weather Forecast</Name>
+		<ConfigUI>
+			<Field id="locationType" type="menu" defaultValue="latlong">
+				<Label>Location Type:</Label>
+				<List>
+					<Option value="latlong">Latitude / Longitude</Option>
+					<Option value="address">Address or Place Name</Option>
+				</List>
+			</Field>
+			<Field id="latitude" type="textfield" visibleBindingId="locationType" visibleBindingValue="latlong">
+				<Label>Latitude:</Label>
+			</Field>
+			<Field id="longitude" type="textfield" visibleBindingId="locationType" visibleBindingValue="latlong">
+				<Label>Longitude:</Label>
+			</Field>
+			<Field id="address" type="textfield" visibleBindingId="locationType" visibleBindingValue="address">
+				<Label>Address or Place Name:</Label>
+			</Field>
+			<Field id="label" type="label" fontSize="small" fontColor="darkgray">
+				<Label>Provides daily forecast data for up to 6 days. Enter a latitude/longitude pair or a place name.</Label>
+			</Field>
+		</ConfigUI>
+		<UiDisplayStateId>day1_temperatureAvg</UiDisplayStateId>
+		<States>
+			<State id="observationTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Last Update Time</TriggerLabel>
+				<ControlPageLabel>Last Update Time</ControlPageLabel>
+			</State>
+
+			<!-- Day 1 -->
+			<State id="separator_d1">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="day1_date">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 1 Date</TriggerLabel>
+				<ControlPageLabel>Day 1 Date</ControlPageLabel>
+			</State>
+			<State id="day1_weatherCode">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 1 Weather Code</TriggerLabel>
+				<ControlPageLabel>Day 1 Weather Code</ControlPageLabel>
+			</State>
+			<State id="day1_weatherDescription">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 1 Weather Description</TriggerLabel>
+				<ControlPageLabel>Day 1 Weather Description</ControlPageLabel>
+			</State>
+			<State id="day1_temperatureMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 1 High Temperature</TriggerLabel>
+				<ControlPageLabel>Day 1 High Temperature</ControlPageLabel>
+			</State>
+			<State id="day1_temperatureMin">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 1 Low Temperature</TriggerLabel>
+				<ControlPageLabel>Day 1 Low Temperature</ControlPageLabel>
+			</State>
+			<State id="day1_temperatureAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 1 Avg Temperature</TriggerLabel>
+				<ControlPageLabel>Day 1 Avg Temperature</ControlPageLabel>
+			</State>
+			<State id="day1_precipitationProbabilityMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 1 Precip Probability</TriggerLabel>
+				<ControlPageLabel>Day 1 Precip Probability %</ControlPageLabel>
+			</State>
+			<State id="day1_windSpeedAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 1 Avg Wind Speed</TriggerLabel>
+				<ControlPageLabel>Day 1 Avg Wind Speed</ControlPageLabel>
+			</State>
+			<State id="day1_windGustMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 1 Max Wind Gust</TriggerLabel>
+				<ControlPageLabel>Day 1 Max Wind Gust</ControlPageLabel>
+			</State>
+			<State id="day1_humidityAvg">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 1 Avg Humidity</TriggerLabel>
+				<ControlPageLabel>Day 1 Avg Humidity</ControlPageLabel>
+			</State>
+			<State id="day1_uvIndexMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 1 Max UV Index</TriggerLabel>
+				<ControlPageLabel>Day 1 Max UV Index</ControlPageLabel>
+			</State>
+			<State id="day1_sunriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 1 Sunrise</TriggerLabel>
+				<ControlPageLabel>Day 1 Sunrise</ControlPageLabel>
+			</State>
+			<State id="day1_sunsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 1 Sunset</TriggerLabel>
+				<ControlPageLabel>Day 1 Sunset</ControlPageLabel>
+			</State>
+			<State id="day1_moonriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 1 Moonrise</TriggerLabel>
+				<ControlPageLabel>Day 1 Moonrise</ControlPageLabel>
+			</State>
+			<State id="day1_moonsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 1 Moonset</TriggerLabel>
+				<ControlPageLabel>Day 1 Moonset</ControlPageLabel>
+			</State>
+			<State id="day1_cloudCoverAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 1 Avg Cloud Cover</TriggerLabel>
+				<ControlPageLabel>Day 1 Avg Cloud Cover %</ControlPageLabel>
+			</State>
+			<State id="day1_visibilityAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 1 Avg Visibility</TriggerLabel>
+				<ControlPageLabel>Day 1 Avg Visibility</ControlPageLabel>
+			</State>
+
+			<!-- Day 2 -->
+			<State id="separator_d2">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="day2_date">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 2 Date</TriggerLabel>
+				<ControlPageLabel>Day 2 Date</ControlPageLabel>
+			</State>
+			<State id="day2_weatherCode">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 2 Weather Code</TriggerLabel>
+				<ControlPageLabel>Day 2 Weather Code</ControlPageLabel>
+			</State>
+			<State id="day2_weatherDescription">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 2 Weather Description</TriggerLabel>
+				<ControlPageLabel>Day 2 Weather Description</ControlPageLabel>
+			</State>
+			<State id="day2_temperatureMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 2 High Temperature</TriggerLabel>
+				<ControlPageLabel>Day 2 High Temperature</ControlPageLabel>
+			</State>
+			<State id="day2_temperatureMin">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 2 Low Temperature</TriggerLabel>
+				<ControlPageLabel>Day 2 Low Temperature</ControlPageLabel>
+			</State>
+			<State id="day2_temperatureAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 2 Avg Temperature</TriggerLabel>
+				<ControlPageLabel>Day 2 Avg Temperature</ControlPageLabel>
+			</State>
+			<State id="day2_precipitationProbabilityMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 2 Precip Probability</TriggerLabel>
+				<ControlPageLabel>Day 2 Precip Probability %</ControlPageLabel>
+			</State>
+			<State id="day2_windSpeedAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 2 Avg Wind Speed</TriggerLabel>
+				<ControlPageLabel>Day 2 Avg Wind Speed</ControlPageLabel>
+			</State>
+			<State id="day2_windGustMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 2 Max Wind Gust</TriggerLabel>
+				<ControlPageLabel>Day 2 Max Wind Gust</ControlPageLabel>
+			</State>
+			<State id="day2_humidityAvg">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 2 Avg Humidity</TriggerLabel>
+				<ControlPageLabel>Day 2 Avg Humidity</ControlPageLabel>
+			</State>
+			<State id="day2_uvIndexMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 2 Max UV Index</TriggerLabel>
+				<ControlPageLabel>Day 2 Max UV Index</ControlPageLabel>
+			</State>
+			<State id="day2_sunriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 2 Sunrise</TriggerLabel>
+				<ControlPageLabel>Day 2 Sunrise</ControlPageLabel>
+			</State>
+			<State id="day2_sunsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 2 Sunset</TriggerLabel>
+				<ControlPageLabel>Day 2 Sunset</ControlPageLabel>
+			</State>
+			<State id="day2_moonriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 2 Moonrise</TriggerLabel>
+				<ControlPageLabel>Day 2 Moonrise</ControlPageLabel>
+			</State>
+			<State id="day2_moonsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 2 Moonset</TriggerLabel>
+				<ControlPageLabel>Day 2 Moonset</ControlPageLabel>
+			</State>
+			<State id="day2_cloudCoverAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 2 Avg Cloud Cover</TriggerLabel>
+				<ControlPageLabel>Day 2 Avg Cloud Cover %</ControlPageLabel>
+			</State>
+			<State id="day2_visibilityAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 2 Avg Visibility</TriggerLabel>
+				<ControlPageLabel>Day 2 Avg Visibility</ControlPageLabel>
+			</State>
+
+			<!-- Day 3 -->
+			<State id="separator_d3">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="day3_date">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 3 Date</TriggerLabel>
+				<ControlPageLabel>Day 3 Date</ControlPageLabel>
+			</State>
+			<State id="day3_weatherCode">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 3 Weather Code</TriggerLabel>
+				<ControlPageLabel>Day 3 Weather Code</ControlPageLabel>
+			</State>
+			<State id="day3_weatherDescription">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 3 Weather Description</TriggerLabel>
+				<ControlPageLabel>Day 3 Weather Description</ControlPageLabel>
+			</State>
+			<State id="day3_temperatureMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 3 High Temperature</TriggerLabel>
+				<ControlPageLabel>Day 3 High Temperature</ControlPageLabel>
+			</State>
+			<State id="day3_temperatureMin">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 3 Low Temperature</TriggerLabel>
+				<ControlPageLabel>Day 3 Low Temperature</ControlPageLabel>
+			</State>
+			<State id="day3_temperatureAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 3 Avg Temperature</TriggerLabel>
+				<ControlPageLabel>Day 3 Avg Temperature</ControlPageLabel>
+			</State>
+			<State id="day3_precipitationProbabilityMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 3 Precip Probability</TriggerLabel>
+				<ControlPageLabel>Day 3 Precip Probability %</ControlPageLabel>
+			</State>
+			<State id="day3_windSpeedAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 3 Avg Wind Speed</TriggerLabel>
+				<ControlPageLabel>Day 3 Avg Wind Speed</ControlPageLabel>
+			</State>
+			<State id="day3_windGustMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 3 Max Wind Gust</TriggerLabel>
+				<ControlPageLabel>Day 3 Max Wind Gust</ControlPageLabel>
+			</State>
+			<State id="day3_humidityAvg">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 3 Avg Humidity</TriggerLabel>
+				<ControlPageLabel>Day 3 Avg Humidity</ControlPageLabel>
+			</State>
+			<State id="day3_uvIndexMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 3 Max UV Index</TriggerLabel>
+				<ControlPageLabel>Day 3 Max UV Index</ControlPageLabel>
+			</State>
+			<State id="day3_sunriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 3 Sunrise</TriggerLabel>
+				<ControlPageLabel>Day 3 Sunrise</ControlPageLabel>
+			</State>
+			<State id="day3_sunsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 3 Sunset</TriggerLabel>
+				<ControlPageLabel>Day 3 Sunset</ControlPageLabel>
+			</State>
+			<State id="day3_moonriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 3 Moonrise</TriggerLabel>
+				<ControlPageLabel>Day 3 Moonrise</ControlPageLabel>
+			</State>
+			<State id="day3_moonsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 3 Moonset</TriggerLabel>
+				<ControlPageLabel>Day 3 Moonset</ControlPageLabel>
+			</State>
+			<State id="day3_cloudCoverAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 3 Avg Cloud Cover</TriggerLabel>
+				<ControlPageLabel>Day 3 Avg Cloud Cover %</ControlPageLabel>
+			</State>
+			<State id="day3_visibilityAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 3 Avg Visibility</TriggerLabel>
+				<ControlPageLabel>Day 3 Avg Visibility</ControlPageLabel>
+			</State>
+
+			<!-- Day 4 -->
+			<State id="separator_d4">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="day4_date">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 4 Date</TriggerLabel>
+				<ControlPageLabel>Day 4 Date</ControlPageLabel>
+			</State>
+			<State id="day4_weatherCode">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 4 Weather Code</TriggerLabel>
+				<ControlPageLabel>Day 4 Weather Code</ControlPageLabel>
+			</State>
+			<State id="day4_weatherDescription">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 4 Weather Description</TriggerLabel>
+				<ControlPageLabel>Day 4 Weather Description</ControlPageLabel>
+			</State>
+			<State id="day4_temperatureMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 4 High Temperature</TriggerLabel>
+				<ControlPageLabel>Day 4 High Temperature</ControlPageLabel>
+			</State>
+			<State id="day4_temperatureMin">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 4 Low Temperature</TriggerLabel>
+				<ControlPageLabel>Day 4 Low Temperature</ControlPageLabel>
+			</State>
+			<State id="day4_temperatureAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 4 Avg Temperature</TriggerLabel>
+				<ControlPageLabel>Day 4 Avg Temperature</ControlPageLabel>
+			</State>
+			<State id="day4_precipitationProbabilityMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 4 Precip Probability</TriggerLabel>
+				<ControlPageLabel>Day 4 Precip Probability %</ControlPageLabel>
+			</State>
+			<State id="day4_windSpeedAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 4 Avg Wind Speed</TriggerLabel>
+				<ControlPageLabel>Day 4 Avg Wind Speed</ControlPageLabel>
+			</State>
+			<State id="day4_windGustMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 4 Max Wind Gust</TriggerLabel>
+				<ControlPageLabel>Day 4 Max Wind Gust</ControlPageLabel>
+			</State>
+			<State id="day4_humidityAvg">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 4 Avg Humidity</TriggerLabel>
+				<ControlPageLabel>Day 4 Avg Humidity</ControlPageLabel>
+			</State>
+			<State id="day4_uvIndexMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 4 Max UV Index</TriggerLabel>
+				<ControlPageLabel>Day 4 Max UV Index</ControlPageLabel>
+			</State>
+			<State id="day4_sunriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 4 Sunrise</TriggerLabel>
+				<ControlPageLabel>Day 4 Sunrise</ControlPageLabel>
+			</State>
+			<State id="day4_sunsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 4 Sunset</TriggerLabel>
+				<ControlPageLabel>Day 4 Sunset</ControlPageLabel>
+			</State>
+			<State id="day4_moonriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 4 Moonrise</TriggerLabel>
+				<ControlPageLabel>Day 4 Moonrise</ControlPageLabel>
+			</State>
+			<State id="day4_moonsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 4 Moonset</TriggerLabel>
+				<ControlPageLabel>Day 4 Moonset</ControlPageLabel>
+			</State>
+			<State id="day4_cloudCoverAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 4 Avg Cloud Cover</TriggerLabel>
+				<ControlPageLabel>Day 4 Avg Cloud Cover %</ControlPageLabel>
+			</State>
+			<State id="day4_visibilityAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 4 Avg Visibility</TriggerLabel>
+				<ControlPageLabel>Day 4 Avg Visibility</ControlPageLabel>
+			</State>
+
+			<!-- Day 5 -->
+			<State id="separator_d5">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="day5_date">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 5 Date</TriggerLabel>
+				<ControlPageLabel>Day 5 Date</ControlPageLabel>
+			</State>
+			<State id="day5_weatherCode">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 5 Weather Code</TriggerLabel>
+				<ControlPageLabel>Day 5 Weather Code</ControlPageLabel>
+			</State>
+			<State id="day5_weatherDescription">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 5 Weather Description</TriggerLabel>
+				<ControlPageLabel>Day 5 Weather Description</ControlPageLabel>
+			</State>
+			<State id="day5_temperatureMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 5 High Temperature</TriggerLabel>
+				<ControlPageLabel>Day 5 High Temperature</ControlPageLabel>
+			</State>
+			<State id="day5_temperatureMin">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 5 Low Temperature</TriggerLabel>
+				<ControlPageLabel>Day 5 Low Temperature</ControlPageLabel>
+			</State>
+			<State id="day5_temperatureAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 5 Avg Temperature</TriggerLabel>
+				<ControlPageLabel>Day 5 Avg Temperature</ControlPageLabel>
+			</State>
+			<State id="day5_precipitationProbabilityMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 5 Precip Probability</TriggerLabel>
+				<ControlPageLabel>Day 5 Precip Probability %</ControlPageLabel>
+			</State>
+			<State id="day5_windSpeedAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 5 Avg Wind Speed</TriggerLabel>
+				<ControlPageLabel>Day 5 Avg Wind Speed</ControlPageLabel>
+			</State>
+			<State id="day5_windGustMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 5 Max Wind Gust</TriggerLabel>
+				<ControlPageLabel>Day 5 Max Wind Gust</ControlPageLabel>
+			</State>
+			<State id="day5_humidityAvg">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 5 Avg Humidity</TriggerLabel>
+				<ControlPageLabel>Day 5 Avg Humidity</ControlPageLabel>
+			</State>
+			<State id="day5_uvIndexMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 5 Max UV Index</TriggerLabel>
+				<ControlPageLabel>Day 5 Max UV Index</ControlPageLabel>
+			</State>
+			<State id="day5_sunriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 5 Sunrise</TriggerLabel>
+				<ControlPageLabel>Day 5 Sunrise</ControlPageLabel>
+			</State>
+			<State id="day5_sunsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 5 Sunset</TriggerLabel>
+				<ControlPageLabel>Day 5 Sunset</ControlPageLabel>
+			</State>
+			<State id="day5_moonriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 5 Moonrise</TriggerLabel>
+				<ControlPageLabel>Day 5 Moonrise</ControlPageLabel>
+			</State>
+			<State id="day5_moonsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 5 Moonset</TriggerLabel>
+				<ControlPageLabel>Day 5 Moonset</ControlPageLabel>
+			</State>
+			<State id="day5_cloudCoverAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 5 Avg Cloud Cover</TriggerLabel>
+				<ControlPageLabel>Day 5 Avg Cloud Cover %</ControlPageLabel>
+			</State>
+			<State id="day5_visibilityAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 5 Avg Visibility</TriggerLabel>
+				<ControlPageLabel>Day 5 Avg Visibility</ControlPageLabel>
+			</State>
+
+			<!-- Day 6 -->
+			<State id="separator_d6">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="day6_date">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 6 Date</TriggerLabel>
+				<ControlPageLabel>Day 6 Date</ControlPageLabel>
+			</State>
+			<State id="day6_weatherCode">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 6 Weather Code</TriggerLabel>
+				<ControlPageLabel>Day 6 Weather Code</ControlPageLabel>
+			</State>
+			<State id="day6_weatherDescription">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 6 Weather Description</TriggerLabel>
+				<ControlPageLabel>Day 6 Weather Description</ControlPageLabel>
+			</State>
+			<State id="day6_temperatureMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 6 High Temperature</TriggerLabel>
+				<ControlPageLabel>Day 6 High Temperature</ControlPageLabel>
+			</State>
+			<State id="day6_temperatureMin">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 6 Low Temperature</TriggerLabel>
+				<ControlPageLabel>Day 6 Low Temperature</ControlPageLabel>
+			</State>
+			<State id="day6_temperatureAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 6 Avg Temperature</TriggerLabel>
+				<ControlPageLabel>Day 6 Avg Temperature</ControlPageLabel>
+			</State>
+			<State id="day6_precipitationProbabilityMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 6 Precip Probability</TriggerLabel>
+				<ControlPageLabel>Day 6 Precip Probability %</ControlPageLabel>
+			</State>
+			<State id="day6_windSpeedAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 6 Avg Wind Speed</TriggerLabel>
+				<ControlPageLabel>Day 6 Avg Wind Speed</ControlPageLabel>
+			</State>
+			<State id="day6_windGustMax">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 6 Max Wind Gust</TriggerLabel>
+				<ControlPageLabel>Day 6 Max Wind Gust</ControlPageLabel>
+			</State>
+			<State id="day6_humidityAvg">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 6 Avg Humidity</TriggerLabel>
+				<ControlPageLabel>Day 6 Avg Humidity</ControlPageLabel>
+			</State>
+			<State id="day6_uvIndexMax">
+				<ValueType>Integer</ValueType>
+				<TriggerLabel>Day 6 Max UV Index</TriggerLabel>
+				<ControlPageLabel>Day 6 Max UV Index</ControlPageLabel>
+			</State>
+			<State id="day6_sunriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 6 Sunrise</TriggerLabel>
+				<ControlPageLabel>Day 6 Sunrise</ControlPageLabel>
+			</State>
+			<State id="day6_sunsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 6 Sunset</TriggerLabel>
+				<ControlPageLabel>Day 6 Sunset</ControlPageLabel>
+			</State>
+			<State id="day6_moonriseTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 6 Moonrise</TriggerLabel>
+				<ControlPageLabel>Day 6 Moonrise</ControlPageLabel>
+			</State>
+			<State id="day6_moonsetTime">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Day 6 Moonset</TriggerLabel>
+				<ControlPageLabel>Day 6 Moonset</ControlPageLabel>
+			</State>
+			<State id="day6_cloudCoverAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 6 Avg Cloud Cover</TriggerLabel>
+				<ControlPageLabel>Day 6 Avg Cloud Cover %</ControlPageLabel>
+			</State>
+			<State id="day6_visibilityAvg">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Day 6 Avg Visibility</TriggerLabel>
+				<ControlPageLabel>Day 6 Avg Visibility</ControlPageLabel>
+			</State>
+
+		</States>
+	</Device>
+
+</Devices>

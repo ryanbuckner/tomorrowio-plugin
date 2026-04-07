@@ -1,0 +1,13 @@
+<MenuItems>
+	<!-- Refresh Weather Data -->
+	<MenuItem id="refreshData">
+		<n>Refresh Weather Data</n>
+		<CallbackMethod>refresh_data</CallbackMethod>
+	</MenuItem>
+
+	<!-- Toggle Debugging -->
+	<MenuItem id="toggleDebug">
+		<n>Toggle Debugging</n>
+		<CallbackMethod>toggle_debugging</CallbackMethod>
+	</MenuItem>
+</MenuItems>
