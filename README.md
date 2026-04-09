@@ -1,4 +1,4 @@
-<img src="https://www.tomorrow.io/wp-content/uploads/2022/01/tomorrow-logo.svg" width="200">
+<img src="https://techjobsforgood-prod.s3.amazonaws.com/company_profile_photos/e8364d92-4faa-496e-a630-39bf3a751894-20220923-214424.jpg" >
 
 # Tomorrow.io Weather Plugin for Indigo Domotics Home Automation
 ## tomorrowio-plugin for Python 3.11
