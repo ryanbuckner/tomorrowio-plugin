@@ -10,6 +10,10 @@
 			<Option value="metric">Metric (°C, m/s, hPa)</Option>
 		</List>
 	</Field>
+	<Field id="updateInterval" type="textfield" defaultValue="30">
+    <Label>Refresh Interval (minutes):</Label>
+    <Description>(Minimum 5, Maximum 1440)</Description>
+	</Field>
 	<Field id="hideLogMessages" type="checkbox" defaultValue="false">
 		<Label>Limited Logging:</Label>
 		<Description>(Only errors and select messages are logged)</Description>

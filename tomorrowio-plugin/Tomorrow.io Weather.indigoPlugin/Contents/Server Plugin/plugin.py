@@ -20,12 +20,21 @@ See: https://www.tomorrow.io/weather-api/
 import datetime as dt
 import json
 import logging
+import sys
+import indigo 
+import requests
+from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
+import pytz
+from timezonefinder import TimezoneFinder
 
 try:
-    import indigo  # noqa
+    import indigo 
     import requests
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
+    import pytz
+    from timezonefinder import TimezoneFinder
 except ImportError:
+    indigo.server.log("There are required libraries than were not installed")
     pass
 
 ################################################################################
@@ -85,6 +94,20 @@ UNIT_LABELS = {
     }
 }
 
+TZ_FULL_NAMES = {
+    "EDT": "Eastern Daylight Time",
+    "EST": "Eastern Standard Time",
+    "CDT": "Central Daylight Time",
+    "CST": "Central Standard Time",
+    "MDT": "Mountain Daylight Time",
+    "MST": "Mountain Standard Time",
+    "PDT": "Pacific Daylight Time",
+    "PST": "Pacific Standard Time",
+    "AKDT": "Alaska Daylight Time",
+    "AKST": "Alaska Standard Time",
+    "HST": "Hawaii Standard Time",
+    "UTC": "Coordinated Universal Time",
+}
 
 ################################################################################
 class Plugin(indigo.PluginBase):
@@ -100,6 +123,17 @@ class Plugin(indigo.PluginBase):
         self.hide_msgs = plugin_prefs.get("hideLogMessages", False)
         self.device_list = []
         self.changing_managed_devices = False
+        self.update_interval = int(plugin_prefs.get("updateInterval", 30))
+
+        self.logger.info(u"")
+        self.logger.info(u"{0:=^130}".format("Starting Tomorrow.io Plugin Engine"))
+        self.logger.info(u"{0:<30} {1}".format("Plugin name:", plugin_display_name))
+        self.logger.info(u"{0:<30} {1}".format("Plugin version:", plugin_version))
+        self.logger.info(u"{0:<30} {1}".format("Plugin ID:", plugin_id))
+        self.logger.info(u"{0:<30} {1}".format("Refresh Frequency:", str(self.update_interval) + " minutes"))
+        self.logger.info(u"{0:<30} {1}".format("Indigo version:", indigo.server.version))
+        self.logger.info(u"{0:<30} {1}".format("Python version:", sys.version.replace('\n', '')))
+        self.logger.info(u"{0:=^130}".format(""))
 
     ########################################
     def closed_prefs_config_ui(self, values_dict=None, user_cancelled=False):
@@ -110,6 +144,9 @@ class Plugin(indigo.PluginBase):
 
             if values_dict.get('hideLogMessages') != self.hide_msgs:
                 self.hide_msgs = values_dict['hideLogMessages']
+
+            if values_dict.get('updateInterval') != str(self.update_interval):
+                self.update_interval = int(values_dict.get('updateInterval', 30))    
 
             for dev in indigo.devices.iter("self"):
                 old_props = dev.pluginProps
@@ -206,7 +243,7 @@ class Plugin(indigo.PluginBase):
         try:
             while True:
                 # Sleep first -- devices are updated on start via device_start_comm
-                self.sleep(30 * 60)
+                self.sleep(self.update_interval * 60)
                 self.logger.debug("Starting device update cycle...")
                 while self.changing_managed_devices:
                     self.sleep(2)
@@ -222,7 +259,16 @@ class Plugin(indigo.PluginBase):
         error_msg_dict = indigo.Dict()
         if not values_dict.get('apiKey', '').strip():
             error_msg_dict['apiKey'] = "API key is required."
+        try:
+            interval = int(values_dict.get('updateInterval', 30))
+            if interval < 5 or interval > 1440:
+                error_msg_dict['updateInterval'] = "Update interval must be between 5 and 1440 minutes."
+        except (TypeError, ValueError):
+            error_msg_dict['updateInterval'] = "Update interval must be a whole number."
+
+        if len(error_msg_dict) > 0:
             return False, values_dict, error_msg_dict
+
         return True, values_dict
 
     ########################################
@@ -269,6 +315,7 @@ class Plugin(indigo.PluginBase):
             obs_time_raw = data['data']['time']
             lat = data['location']['lat']
             lon = data['location']['lon']
+            tz_name, tz_abbrev = self.get_timezone_info(lat, lon)
 
             obs_time = self._parse_iso_time(obs_time_raw)
 
@@ -297,6 +344,7 @@ class Plugin(indigo.PluginBase):
             wind_dir_str = self.wind_dir_string(wind_deg) if wind_deg is not None else "- data unavailable -"
             wind_unit = unit_labels['wind']
 
+
             if wind_speed is not None and wind_dir_str != "- data unavailable -":
                 wind_str = f"{wind_dir_str} at {round(wind_speed, 1)} {wind_unit}"
                 if wind_gust is not None:
@@ -311,7 +359,7 @@ class Plugin(indigo.PluginBase):
                 dew_str = "- data unavailable -"
 
             key_value_list = [
-                {'key': 'observationTime',        'value': obs_time},
+                {'key': 'observationTime',         'value': obs_time},
                 {'key': 'weatherCode',             'value': weather_code},
                 {'key': 'weatherDescription',      'value': weather_desc},
                 {'key': 'temperature',             'value': self._safe_round(temp, 1)},
@@ -342,6 +390,8 @@ class Plugin(indigo.PluginBase):
                 {'key': 'latitude',                'value': round(float(lat), 4)},
                 {'key': 'longitude',               'value': round(float(lon), 4)},
                 {'key': 'units',                   'value': units},
+                {'key': 'timeZoneName',            'value': tz_name},
+                {'key': 'timeZone',                'value': tz_abbrev},
             ]
 
             device.updateStatesOnServer(key_value_list)
@@ -415,6 +465,7 @@ class Plugin(indigo.PluginBase):
                 weather_code = v.get('weatherCodeMax', 0) or v.get('weatherCodeAvg', 0)
                 weather_desc = WEATHER_CODES.get(weather_code, f"Code {weather_code}")
 
+
                 state_list.extend([
                     {'key': f"{day_key}_date",                        'value': day_date},
                     {'key': f"{day_key}_weatherCode",                 'value': self._safe_int(weather_code)},
@@ -456,6 +507,21 @@ class Plugin(indigo.PluginBase):
     ########################################
     # Helpers
     ########################################
+    @staticmethod
+    def get_timezone_info(lat, lon):
+        try:
+            tf = TimezoneFinder()
+            tz_str = tf.timezone_at(lat=float(lat), lng=float(lon))
+            if not tz_str:
+                return "- data unavailable -", "- data unavailable -"
+            tz = pytz.timezone(tz_str)
+            now = dt.datetime.now(tz)
+            tz_abbrev = now.strftime("%Z")
+            tz_name = TZ_FULL_NAMES.get(tz_abbrev, tz_abbrev)
+            return tz_name, tz_abbrev
+        except Exception:
+            return "- data unavailable -", "- data unavailable -"
+
     @staticmethod
     def _get_location_string(props):
         """Return a location string suitable for the tomorrow.io API from device props."""

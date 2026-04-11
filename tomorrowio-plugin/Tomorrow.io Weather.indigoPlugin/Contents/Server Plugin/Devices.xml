@@ -208,6 +208,16 @@
 				<TriggerLabel>Units</TriggerLabel>
 				<ControlPageLabel>Units</ControlPageLabel>
 			</State>
+			<State id="timeZoneName">
+			    <ValueType>String</ValueType>
+			    <TriggerLabel>Time Zone Name</TriggerLabel>
+			    <ControlPageLabel>Time Zone Name</ControlPageLabel>
+			</State>
+			<State id="timeZone">
+			    <ValueType>String</ValueType>
+			    <TriggerLabel>Time Zone</TriggerLabel>
+			    <ControlPageLabel>Time Zone</ControlPageLabel>
+			</State>
 		</States>
 	</Device>
 
