@@ -1,2 +1,2 @@
 timezonefinder==6.5.9
-
+pytz==2025.2

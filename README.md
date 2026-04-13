@@ -62,7 +62,7 @@ Both device types support two location methods:
 
 Current Conditions states include:
 
-`weatherCode`, `weatherDescription`, `temperature`, `temperatureApparent`, `temperatureString`, `humidity`, `dewPoint`, `dewPointString`, `windSpeed`, `windGust`, `windDirection`, `windDegrees`, `windString`, `pressureSeaLevel`, `pressureSurfaceLevel`, `altimeterSetting`, `visibility`, `cloudBase`, `cloudCeiling`, `cloudCover`, `uvIndex`, `uvHealthConcern`, `precipitationProbability`, `rainIntensity`, `snowIntensity`, `sleetIntensity`, `freezingRainIntensity`, `latitude`, `longitude`, `units`
+`weatherCode`, `weatherDescription`, `temperature`, `temperatureApparent`, `temperatureString`, `humidity`, `dewPoint`, `dewPointString`, `windSpeed`, `windGust`, `windDirection`, `windDegrees`, `windString`, `pressureSeaLevel`, `pressureSurfaceLevel`, `altimeterSetting`, `visibility`, `cloudBase`, `cloudCeiling`, `cloudCover`, `uvIndex`, `uvHealthConcern`, `precipitationProbability`, `rainIntensity`, `snowIntensity`, `sleetIntensity`, `freezingRainIntensity`, `latitude`, `longitude`, `units`, `timne_zone_name`, `time_zone` 
 
 Forecast states are prefixed `day1_` through `day6_` and include:
 
