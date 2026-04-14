@@ -155,6 +155,8 @@ class Plugin(indigo.PluginBase):
                 if dev.enabled:
                     self.update(dev, force_update=True)
 
+            self.logger.info(u"Plugin references have been updated")
+
     ########################################
     def device_start_comm(self, device):
         try:
