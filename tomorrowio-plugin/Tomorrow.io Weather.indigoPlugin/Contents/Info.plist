@@ -3,22 +3,20 @@
 <plist version="1.0">
 <dict>
 	<key>PluginVersion</key>
-	<string>1.1.0</string>
+	<string>2026.1.0</string>
 	<key>ServerApiVersion</key>
-	<string>3.7</string>
-	<key>LoadPriority</key>
-	<integer>5</integer>
+    <string>3.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>Tomorrow.io Weather</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.indigodomo.indigoplugin.tomorrowio</string>
+	<string>com.ryanbuckner.indigoplugin.tomorrowio</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>https://www.tomorrow.io</string>
+			<string>https://github.com/ryanbuckner/tomorrowio-plugin/wiki</string>
 		</dict>
 	</array>
 </dict>

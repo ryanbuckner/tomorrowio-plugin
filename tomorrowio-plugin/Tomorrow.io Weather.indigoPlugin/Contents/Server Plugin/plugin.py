@@ -21,14 +21,14 @@ import datetime as dt
 import json
 import logging
 import sys
-import indigo 
+import indigo
 import requests
 from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
 import pytz
 from timezonefinder import TimezoneFinder
 
 try:
-    import indigo 
+    import indigo
     import requests
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
     import pytz
@@ -362,23 +362,23 @@ class Plugin(indigo.PluginBase):
                 {'key': 'observationTime',         'value': obs_time},
                 {'key': 'weatherCode',             'value': weather_code},
                 {'key': 'weatherDescription',      'value': weather_desc},
-                {'key': 'temperature',             'value': self._safe_round(temp, 1)},
-                {'key': 'temperatureApparent',     'value': self._safe_round(temp_apparent, 1)},
+                {'key': 'temperature',             'value': self._safe_round(temp, 1),          'decimalPlaces': 1},
+                {'key': 'temperatureApparent',     'value': self._safe_round(temp_apparent, 1), 'decimalPlaces': 1},
                 {'key': 'temperatureString',       'value': temp_str},
                 {'key': 'humidity',                'value': self._safe_int(values.get('humidity'))},
-                {'key': 'dewPoint',                'value': self._safe_round(dew_point, 1)},
+                {'key': 'dewPoint',                'value': self._safe_round(dew_point, 1),      'decimalPlaces': 1},
                 {'key': 'dewPointString',          'value': dew_str},
-                {'key': 'windSpeed',               'value': self._safe_round(wind_speed, 1)},
-                {'key': 'windGust',                'value': self._safe_round(wind_gust, 1)},
+                {'key': 'windSpeed',               'value': self._safe_round(wind_speed, 1), 'decimalPlaces': 1},
+                {'key': 'windGust',                'value': self._safe_round(wind_gust, 1),  'decimalPlaces': 1},
                 {'key': 'windDirection',           'value': wind_dir_str},
                 {'key': 'windDegrees',             'value': self._safe_round(wind_deg, 1)},
                 {'key': 'windString',              'value': wind_str},
                 {'key': 'pressureSeaLevel',        'value': self._safe_round(values.get('pressureSeaLevel'), 2)},
                 {'key': 'pressureSurfaceLevel',    'value': self._safe_round(values.get('pressureSurfaceLevel'), 2)},
                 {'key': 'altimeterSetting',        'value': self._safe_round(values.get('altimeterSetting'), 2)},
-                {'key': 'visibility',              'value': self._safe_round(values.get('visibility'), 1)},
-                {'key': 'cloudBase',               'value': self._safe_round(values.get('cloudBase'), 2)},
-                {'key': 'cloudCeiling',            'value': self._safe_round(values.get('cloudCeiling'), 2)},
+                {'key': 'visibility',              'value': self._safe_round(values.get('visibility'), 1), 'decimalPlaces': 1},
+                {'key': 'cloudBase',               'value': self._safe_round(values.get('cloudBase'), 2),    'decimalPlaces': 2},
+                {'key': 'cloudCeiling',            'value': self._safe_round(values.get('cloudCeiling'), 2), 'decimalPlaces': 2},
                 {'key': 'cloudCover',              'value': self._safe_round(values.get('cloudCover'), 1)},
                 {'key': 'uvIndex',                 'value': self._safe_int(values.get('uvIndex'))},
                 {'key': 'uvHealthConcern',         'value': self._safe_int(values.get('uvHealthConcern'))},
@@ -470,12 +470,12 @@ class Plugin(indigo.PluginBase):
                     {'key': f"{day_key}_date",                        'value': day_date},
                     {'key': f"{day_key}_weatherCode",                 'value': self._safe_int(weather_code)},
                     {'key': f"{day_key}_weatherDescription",          'value': weather_desc},
-                    {'key': f"{day_key}_temperatureMax",              'value': self._safe_round(v.get('temperatureMax'), 1)},
-                    {'key': f"{day_key}_temperatureMin",              'value': self._safe_round(v.get('temperatureMin'), 1)},
-                    {'key': f"{day_key}_temperatureAvg",              'value': self._safe_round(v.get('temperatureAvg'), 1)},
+                    {'key': f"{day_key}_temperatureMax",              'value': self._safe_round(v.get('temperatureMax'), 1), 'decimalPlaces': 1},
+                    {'key': f"{day_key}_temperatureMin",              'value': self._safe_round(v.get('temperatureMin'), 1), 'decimalPlaces': 1},
+                    {'key': f"{day_key}_temperatureAvg",              'value': self._safe_round(v.get('temperatureAvg'), 1), 'decimalPlaces': 1},
                     {'key': f"{day_key}_precipitationProbabilityMax", 'value': self._safe_int(v.get('precipitationProbabilityMax'))},
-                    {'key': f"{day_key}_windSpeedAvg",                'value': self._safe_round(v.get('windSpeedAvg'), 1)},
-                    {'key': f"{day_key}_windGustMax",                 'value': self._safe_round(v.get('windGustMax'), 1)},
+                    {'key': f"{day_key}_windSpeedAvg",                'value': self._safe_round(v.get('windSpeedAvg'), 1), 'decimalPlaces': 1},
+                    {'key': f"{day_key}_windGustMax",                 'value': self._safe_round(v.get('windGustMax'), 1),  'decimalPlaces': 1},
                     {'key': f"{day_key}_humidityAvg",                 'value': self._safe_int(v.get('humidityAvg'))},
                     {'key': f"{day_key}_uvIndexMax",                  'value': self._safe_int(v.get('uvIndexMax'))},
                     {'key': f"{day_key}_sunriseTime",                 'value': self._parse_iso_time(v.get('sunriseTime', ''))},
@@ -483,7 +483,7 @@ class Plugin(indigo.PluginBase):
                     {'key': f"{day_key}_moonriseTime",                'value': self._parse_iso_time(v.get('moonriseTime', ''))},
                     {'key': f"{day_key}_moonsetTime",                 'value': self._parse_iso_time(v.get('moonsetTime', ''))},
                     {'key': f"{day_key}_cloudCoverAvg",               'value': self._safe_round(v.get('cloudCoverAvg'), 1)},
-                    {'key': f"{day_key}_visibilityAvg",               'value': self._safe_round(v.get('visibilityAvg'), 1)},
+                    {'key': f"{day_key}_visibilityAvg",               'value': self._safe_round(v.get('visibilityAvg'), 1), 'decimalPlaces': 1},
                 ])
 
             device.updateStatesOnServer(state_list)
