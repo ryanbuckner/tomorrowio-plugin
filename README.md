@@ -24,7 +24,7 @@ Weather data powered by [Tomorrow.io](https://www.tomorrow.io).
 
 Download the `Tomorrow.io Weather.indigoPlugin` file and double-click it to install.
 
-Icons for web pages and control pages can be downloaded [here](https://github.com/ryanbuckner/tomorrowio-plugin/tree/main/tomorrowio-plugin/images)
+Icons for web pages and control pages can be downloaded [here](https://github.com/ryanbuckner/tomorrowio-plugin/tree/main/images)
 
 ---
 
