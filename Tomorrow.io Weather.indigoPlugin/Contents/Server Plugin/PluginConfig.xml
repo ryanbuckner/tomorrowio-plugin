@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PluginConfig>
+	<Field id="apiKey" type="textfield" defaultValue="">
+		<Label>Tomorrow.io API Key:</Label>
+	</Field>
+	<Field id="units" type="menu" defaultValue="imperial">
+		<Label>Units:</Label>
+		<List>
+			<Option value="imperial">Imperial (°F, mph, inHg)</Option>
+			<Option value="metric">Metric (°C, m/s, hPa)</Option>
+		</List>
+	</Field>
+	<Field id="updateInterval" type="textfield" defaultValue="30">
+    <Label>Refresh Interval (minutes):</Label>
+    <Description>(Minimum 5, Maximum 1440)</Description>
+	</Field>
+	<Field id="hideLogMessages" type="checkbox" defaultValue="true">
+		<Label>Limited Logging:</Label>
+		<Description>(Only errors and select messages are logged)</Description>
+	</Field>
+	<Field id="topLabel" type="label" fontSize="small" fontColor="darkgray">
+		<Label>Yyou can enable extra logging in the Event Log window by checking this button. Use with caution.</Label>
+	</Field>
+	<Field id="showDebugInfo" type="checkbox" defaultValue="false">
+		<Label>Enable debugging:</Label>
+		<Description>(not recommended)</Description>
+	</Field>
+	<Field id="attribution" type="label" fontSize="small" fontColor="darkgray">
+    	<Label>Data and images provided by Tomorrow.io</Label>
+	</Field>
+</PluginConfig>
