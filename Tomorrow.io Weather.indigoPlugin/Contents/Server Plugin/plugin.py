@@ -20,6 +20,7 @@ See: https://www.tomorrow.io/weather-api/
 import datetime as dt
 import json
 import logging
+import math
 import sys
 import indigo
 import requests
@@ -243,18 +244,44 @@ class Plugin(indigo.PluginBase):
 
     ########################################
     def run_concurrent_thread(self):
+        SOLAR_INTERVAL_SEC = 5 * 60
+        cycles_per_weather = max(1, (self.update_interval * 60) // SOLAR_INTERVAL_SEC)
+        cycle = 0
         self.logger.debug("Starting concurrent thread")
         try:
             while True:
                 # Sleep first -- devices are updated on start via device_start_comm
-                self.sleep(self.update_interval * 60)
-                self.logger.debug("Starting device update cycle...")
+                self.sleep(SOLAR_INTERVAL_SEC)
+                cycle += 1
                 while self.changing_managed_devices:
                     self.sleep(2)
                 for device_id in self.device_list:
-                    self.update(indigo.devices[device_id], force_update=False)
+                    dev = indigo.devices[device_id]
+                    if dev.deviceTypeId == 'current':
+                        self._update_solar_states(dev)
+                if cycle >= cycles_per_weather:
+                    self.logger.debug("Starting device update cycle...")
+                    cycle = 0
+                    for device_id in self.device_list:
+                        self.update(indigo.devices[device_id], force_update=False)
         except self.StopThread:
             pass
+
+    ########################################
+    def _update_solar_states(self, device):
+        try:
+            lat = device.states.get('latitude')
+            lon = device.states.get('longitude')
+            if lat is None or lon is None:
+                return
+            solar_azimuth, solar_elevation = self.get_solar_position(lat, lon)
+            device.updateStatesOnServer([
+                {'key': 'solarAzimuth',   'value': solar_azimuth,   'decimalPlaces': 2},
+                {'key': 'solarElevation', 'value': solar_elevation, 'decimalPlaces': 2},
+            ])
+            self.logger.debug(f"{device.name}: solar azimuth={solar_azimuth}, elevation={solar_elevation}")
+        except Exception:
+            self.logger.debug(f"{device.name}: error updating solar states", exc_info=True)
 
     ########################################
     # UI / Config helpers
@@ -321,6 +348,7 @@ class Plugin(indigo.PluginBase):
             lon = data['location']['lon']
             tz_name, tz_abbrev = self.get_timezone_info(lat, lon)
             season = self.get_season(lat)
+            solar_azimuth, solar_elevation = self.get_solar_position(lat, lon)
 
             obs_time = self._parse_iso_time(obs_time_raw)
 
@@ -398,6 +426,8 @@ class Plugin(indigo.PluginBase):
                 {'key': 'timeZoneName',            'value': tz_name},
                 {'key': 'timeZone',                'value': tz_abbrev},
                 {'key': 'season',                  'value': season},
+                {'key': 'solarAzimuth',            'value': solar_azimuth,   'decimalPlaces': 2},
+                {'key': 'solarElevation',          'value': solar_elevation, 'decimalPlaces': 2},
             ]
 
             device.updateStatesOnServer(key_value_list)
@@ -513,6 +543,21 @@ class Plugin(indigo.PluginBase):
     ########################################
     # Helpers
     ########################################
+    @staticmethod
+    def get_solar_position(lat, lon):
+        """Return (azimuth_deg, elevation_deg) for the sun at the given lat/lon."""
+        try:
+            observer = ephem.Observer()
+            observer.lat = str(lat)
+            observer.lon = str(lon)
+            observer.elevation = 0
+            observer.pressure = 1013
+            observer.date = dt.datetime.now(dt.timezone.utc)
+            sun = ephem.Sun(observer)
+            return round(math.degrees(sun.az), 2), round(math.degrees(sun.alt), 2)
+        except Exception:
+            return None, None
+
     @staticmethod
     def get_season(lat, d=None):
         """Return astronomical season name based on equinox/solstice dates."""

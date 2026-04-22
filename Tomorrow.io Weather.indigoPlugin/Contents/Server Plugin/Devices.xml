@@ -223,6 +223,16 @@
 			    <TriggerLabel>Season</TriggerLabel>
 			    <ControlPageLabel>Season</ControlPageLabel>
 			</State>
+			<State id="solarAzimuth">
+			    <ValueType>Number</ValueType>
+			    <TriggerLabel>Solar Azimuth</TriggerLabel>
+			    <ControlPageLabel>Solar Azimuth</ControlPageLabel>
+			</State>
+			<State id="solarElevation">
+			    <ValueType>Number</ValueType>
+			    <TriggerLabel>Solar Elevation</TriggerLabel>
+			    <ControlPageLabel>Solar Elevation</ControlPageLabel>
+			</State>
 		</States>
 	</Device>
 
